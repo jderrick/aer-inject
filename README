@@ -1,0 +1,39 @@
+aer-inject allows to inject PCIE AER errors on the software level into
+a running Linux kernel. This is intended for validation of the PCIE
+driver error recovery handler and PCIE AER core handler.
+
+Syntax:
+
+aer-inject aer-file
+
+See SPEC for the input language
+
+Some simple tests are in test/*.
+
+Requires a new Linux kernel with PCIE AER error injection patches.
+The PCIE AER error injection patches are currently available from
+git://git.kernel.org/pub/scm/linux/kernel/git/xxx.git
+
+
+Authors:
+
+Huang Ying <ying.huang@intel.com>
+
+Basic design, some code and document are based on Andi Kleen's
+mce-inject.
+
+Copyright 2009 by Intel Corporation
+   aer-inject is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published
+   by the Free Software Foundation; version 2.
+
+   aer-inject is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+
+   You should find a copy of v2 of the GNU General Public License
+   somewhere on your Linux system; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+   USA
+

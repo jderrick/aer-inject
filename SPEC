@@ -1,0 +1,52 @@
+
+aer-inject allows to inject PCIE AER errors in a running kernel.
+
+Has to run as root. /dev/aer_inject has to exist.
+
+aer-inject aer-file
+aer-inject < aer-file
+
+Requires a kernel with PCIE AER error injection support. The injection
+only happens on the software level and does not simulate full PCIE AER
+handling on the platform level.
+
+The PCIE AER error to be injected are described in an input language
+which reflects PCIE AER related registers quite straighforward.
+
+See the PCI Express Base Specification section 7.10 for details on
+PCIE AER related registers.
+
+The keywords are case-insensitive
+
+The error always starts with:
+
+AER
+
+The description of error follows:
+
+BUS number DEV number FN number
+
+These specify the PCI device or port via PCI bus number, dev number
+and function number
+
+COR_STATUS {RCVR|BAD_TLP|BAD_DLLP|REP_ROLL|REP_TIMER|number}
+
+UNCOR_STATUS {TRAIN|DLP|POISON_TLP|FCP|COMP_TIME|COMP_ABORT|UNX_COMP|
+	      RX_OVER|MALF_TLP|ECRC|UNSUP|number}
+
+HEADER_LOG number number number number
+
+These specify the corrected and uncorrected error types to be
+injected and corresponding TLP header log.
+
+multiple fields can be on a line.
+
+number can be hex/octal/decimal in the usual C format.
+
+Multiple errors can be in a single file, each new one starts with
+"AER".
+
+For all missing fields reasonable default values are filled in
+(hopefully).
+
+Comments start with # until the end of the line.

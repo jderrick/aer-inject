@@ -1,5 +1,7 @@
-CFLAGS := -g -Wall
-LDFLAGS += -lpthread
+PREFIX    = /usr/local
+CFLAGS    := -g -Wall
+LDFLAGS   += -lpthread
+DESTDIR   =
 
 OBJ := aer-inject.o util.o aer.tab.o lex.yy.o
 GENSRC := aer.tab.c aer.tab.h lex.yy.c
@@ -30,5 +32,9 @@ depend: .depend
 		mv .depend.X .depend
 
 Makefile: .depend
+
+install: aer-inject
+       install -d $(DESTDIR)$(PREFIX)
+       install aer-inject $(DESTDIR)$(PREFIX)
 
 include .depend

@@ -34,7 +34,7 @@ depend: .depend
 Makefile: .depend
 
 install: aer-inject
-       install -d $(DESTDIR)$(PREFIX)
-       install aer-inject $(DESTDIR)$(PREFIX)
+	install -d $(DESTDIR)$(PREFIX)
+	install aer-inject $(DESTDIR)$(PREFIX)
 
 include .depend

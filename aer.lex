@@ -121,10 +121,10 @@ int yywrap(void)
 	return 0;
 }
 
-int main(int ac, char **av)
+int parse_data(char **av)
 {
 	init_lex();
-	argv = ++av;
+	argv = av;
 	if (*argv)
 		yywrap();
 	return yyparse();

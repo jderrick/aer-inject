@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+#define AER_VERSION "0.1"
+
 struct aer_error_inj
 {
 	int8_t bus;
@@ -37,6 +39,7 @@ struct aer_error_inj
 extern void init_aer(struct aer_error_inj *err);
 extern void submit_aer(struct aer_error_inj *err);
 extern int parse_pci_id(const char *str, struct aer_error_inj *err);
+extern int parse_data(char **argv);
 
 extern char *filename;
 extern int yylineno;

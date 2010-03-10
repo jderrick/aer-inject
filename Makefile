@@ -1,5 +1,5 @@
 PREFIX    = /usr/local
-CFLAGS    := -g -Wall
+CFLAGS    := -g -Wall -D_GNU_SOURCE
 LDFLAGS   += -lpthread
 DESTDIR   =
 

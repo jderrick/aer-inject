@@ -36,6 +36,7 @@ struct aer_error_inj
 
 extern void init_aer(struct aer_error_inj *err);
 extern void submit_aer(struct aer_error_inj *err);
+extern int parse_pci_id(const char *str, struct aer_error_inj *err);
 
 extern char *filename;
 extern int yylineno;

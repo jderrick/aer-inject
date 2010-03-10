@@ -27,11 +27,19 @@ static void init(void);
 
 %}
 
-%token AER DOMAIN BUS DEV FN UNCOR_STATUS COR_STATUS HEADER_LOG
-%token TRAIN DLP POISON_TLP FCP COMP_TIME COMP_ABORT UNX_COMP RX_OVER MALF_TLP
-%token ECRC UNSUP
-%token RCVR BAD_TLP BAD_DLLP REP_ROLL REP_TIMER
-%token NUMBER SYMBOL
+%union {
+	int num;
+	char *str;
+}
+
+%token AER DOMAIN BUS DEV FN PCI_ID UNCOR_STATUS COR_STATUS HEADER_LOG
+%token <num> TRAIN DLP POISON_TLP FCP COMP_TIME COMP_ABORT UNX_COMP RX_OVER
+%token <num> MALF_TLP ECRC UNSUP
+%token <num> RCVR BAD_TLP BAD_DLLP REP_ROLL REP_TIMER
+%token <num> SYMBOL NUMBER
+%token <str> PCI_ID_STR
+
+%type<num> uncor_status_list uncor_status cor_status_list cor_status
 
 %%
 
@@ -56,6 +64,8 @@ aer_term: UNCOR_STATUS uncor_status_list	{ aerr.uncor_status = $2; }
 						  aerr.bus = $2;
 						  aerr.dev = $4;
 						  aerr.fn = $6; }
+	| PCI_ID PCI_ID_STR			{ parse_pci_id($2, &aerr);
+						  free($2); }
 	| HEADER_LOG NUMBER NUMBER NUMBER NUMBER { aerr.header_log0 = $2;
 						   aerr.header_log1 = $3;
 						   aerr.header_log2 = $4;
@@ -82,6 +92,24 @@ cor_status: RCVR | BAD_TLP | BAD_DLLP | REP_ROLL | REP_TIMER | NUMBER
 static void init(void)
 {
 	init_aer(&aerr);
+}
+
+int parse_pci_id(const char *str, struct aer_error_inj *aerr)
+{
+	int cnt;
+
+	cnt = sscanf(str, "%04hx:%02hhx:%02hhx.%01hhx",
+		     &aerr->domain, &aerr->bus, &aerr->dev, &aerr->fn);
+	if (cnt != 4) {
+		cnt = sscanf(str, "%02hhx:%02hhx.%01hhx",
+			     &aerr->bus, &aerr->dev, &aerr->fn);
+		if (cnt == 3)
+			aerr->domain = 0;
+		else
+			return 1;
+	}
+
+	return 0;
 }
 
 void yyerror(char const *msg, ...)

@@ -29,13 +29,16 @@ static int lookup_symbol(const char *);
 
 %option nounput
 
+HEXC	[0-9a-fA-F]
+
 %%
 
 #.*\n			/* comment */;
 \n			++yylineno;
-0x[0-9a-fA-F]+ 		|
+({HEXC}{4}:)?{HEXC}{2}:{HEXC}{2}\.{HEXC} { yylval.str = strdup(yytext); return PCI_ID_STR; }
+0x{HEXC}+ 		|
 0[0-7]+			|
-[0-9]+			yylval = strtoull(yytext, NULL, 0); return NUMBER;
+[0-9]+			yylval.num = strtoull(yytext, NULL, 0); return NUMBER;
 [:{}<>]			return yytext[0];
 [_a-zA-Z][_a-zA-Z0-9]*	return lookup_symbol(yytext);
 [ \t]+			/* white space */;
@@ -57,6 +60,7 @@ static struct key {
 	KEY(BUS),
 	KEY(DEV),
 	KEY(FN),
+	KEY(PCI_ID),
 	KEY(UNCOR_STATUS),
 	KEY(COR_STATUS),
 	KEY(HEADER_LOG),
@@ -92,7 +96,7 @@ static int lookup_symbol(const char *name)
 	key.name = name;
 	k = bsearch(&key, keys, ARRAY_SIZE(keys), sizeof(struct key), cmp_key);
 	if (k != NULL) {
-		yylval = k->val;
+		yylval.num = k->val;
 		return k->tok;
 	}
 	return SYMBOL;

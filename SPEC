@@ -22,12 +22,29 @@ The error always starts with:
 
 AER
 
-The description of error follows:
+Followed by
+
+PCI_ID pci_id
+
+These specify the PCI device or port via domain number, bus number,
+dev number and function number using the same format as the lspci
+command:
+
+  WWWW:XX:YY.Z
+
+  Where
+
+     WWWW is the domain (segment) in hexidecimal (optional)
+     XX is the bus number in hexidecimal
+     YY is the device number in hexidecimal
+     Z is the function number in hexidecimal
+
+Alternatively, you can use:
 
 BUS number DEV number FN number
 
-These specify the PCI device or port via PCI bus number, dev number
-and function number
+Number can be a decimal or hex (using 0x).
+
 
 COR_STATUS {RCVR|BAD_TLP|BAD_DLLP|REP_ROLL|REP_TIMER|number}
 
@@ -41,7 +58,7 @@ injected and corresponding TLP header log.
 
 multiple fields can be on a line.
 
-number can be hex/octal/decimal in the usual C format.
+number (except for pci_id) can be hex/octal/decimal in the usual C format.
 
 Multiple errors can be in a single file, each new one starts with
 "AER".

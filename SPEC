@@ -67,3 +67,12 @@ For all missing fields reasonable default values are filled in
 (hopefully).
 
 Comments start with # until the end of the line.
+
+Keywords are case-insensitive.
+
+There are aliases for some of the longer keywords:
+
+      PCI_ID = ID
+      COR_STATUS = COR = CORRECTABLE
+      UNCOR_STATUS = UNCOR = UNCORRECTABLE
+      HEADER_LOG = HL

@@ -54,6 +54,7 @@ static struct key {
 	int32_t val;
 } keys[] = {
 #define KEY(x) { #x, x }
+#define ALIAS(x, y) { #x, y }
 #define KEYVAL(x,v) { #x, x, v }
 	KEY(AER),
 	KEY(DOMAIN),
@@ -61,9 +62,15 @@ static struct key {
 	KEY(DEV),
 	KEY(FN),
 	KEY(PCI_ID),
+	ALIAS(ID, PCI_ID),
 	KEY(UNCOR_STATUS),
+	ALIAS(UNCOR, UNCOR_STATUS),
+	ALIAS(UNCORRECTABLE, UNCOR_STATUS),
 	KEY(COR_STATUS),
+	ALIAS(COR, COR_STATUS),
+	ALIAS(CORRECTABLE, COR_STATUS),
 	KEY(HEADER_LOG),
+	ALIAS(HL, HEADER_LOG),
 	KEYVAL(TRAIN,PCI_ERR_UNC_TRAIN),
 	KEYVAL(DLP, PCI_ERR_UNC_DLP),
 	KEYVAL(POISON_TLP, PCI_ERR_UNC_POISON_TLP),

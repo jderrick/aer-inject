@@ -27,7 +27,7 @@ static void init(void);
 
 %}
 
-%token AER BUS DEV FN UNCOR_STATUS COR_STATUS HEADER_LOG
+%token AER DOMAIN BUS DEV FN UNCOR_STATUS COR_STATUS HEADER_LOG
 %token TRAIN DLP POISON_TLP FCP COMP_TIME COMP_ABORT UNX_COMP RX_OVER MALF_TLP
 %token ECRC UNSUP
 %token RCVR BAD_TLP BAD_DLLP REP_ROLL REP_TIMER
@@ -48,7 +48,12 @@ aer: aer_term
 
 aer_term: UNCOR_STATUS uncor_status_list	{ aerr.uncor_status = $2; }
 	| COR_STATUS cor_status_list		{ aerr.cor_status = $2; }
-	| BUS NUMBER DEV NUMBER FN NUMBER	{ aerr.bus = $2;
+	| DOMAIN NUMBER BUS NUMBER DEV NUMBER FN NUMBER  { aerr.domain = $2;
+	  	     	    	       	  	  aerr.bus = $4;
+						  aerr.dev = $6;
+						  aerr.fn = $8; }
+	| BUS NUMBER DEV NUMBER FN NUMBER	{ aerr.domain = 0;
+						  aerr.bus = $2;
 						  aerr.dev = $4;
 						  aerr.fn = $6; }
 	| HEADER_LOG NUMBER NUMBER NUMBER NUMBER { aerr.header_log0 = $2;

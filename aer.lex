@@ -53,6 +53,7 @@ static struct key {
 #define KEY(x) { #x, x }
 #define KEYVAL(x,v) { #x, x, v }
 	KEY(AER),
+	KEY(DOMAIN),
 	KEY(BUS),
 	KEY(DEV),
 	KEY(FN),

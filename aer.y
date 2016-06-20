@@ -98,7 +98,7 @@ int parse_pci_id(const char *str, struct aer_error_inj *aerr)
 {
 	int cnt;
 
-	cnt = sscanf(str, "%04hx:%02hhx:%02hhx.%01hhx",
+	cnt = sscanf(str, "%08x:%02hhx:%02hhx.%01hhx",
 		     &aerr->domain, &aerr->bus, &aerr->dev, &aerr->fn);
 	if (cnt != 4) {
 		cnt = sscanf(str, "%02hhx:%02hhx.%01hhx",

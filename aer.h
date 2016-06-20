@@ -16,7 +16,7 @@ struct aer_error_inj
 	int32_t header_log1;
 	int32_t header_log2;
 	int32_t header_log3;
-	uint16_t domain;
+	uint32_t domain;
 };
 
 #define  PCI_ERR_UNC_TRAIN	0x00000001	/* Training */
